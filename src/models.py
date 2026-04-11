@@ -1,22 +1,32 @@
-# from sklearn.svm import SVC
-# from sklearn.linear_model import LogisticRegression, RidgeClassifier
-# from sklearn.tree import DecisionTreeClassifier
-# from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-# from sklearn.naive_bayes import GaussianNB
-# from sklearn.neighbors import KNeighborsClassifier
-# from sklearn.neural_network import MLPClassifier
+import pandas as pd
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV
 
+def evaluate_final_models(X_train, y_train):
+    model_params = {
+        'svc': {
+            'model': SVC(gamma='auto'),
+            'params': {'C': [1, 10, 20], 'kernel': ['rbf', 'linear']}
+        },
+        'logistic_regression': {
+            'model': LogisticRegression(solver='liblinear'), # multi_class removed to fix warning
+            'params': {'C': [1, 5, 10]}
+        },
+        'decision_tree': {
+            'model': DecisionTreeClassifier(),
+            'params': {'criterion': ['gini', 'entropy'], 'max_depth': [None, 5, 10]}
+        }
+    }
 
-# def get_models(seed=42):
-#     models = {
-#         "SVM": SVC(kernel="rbf", random_state=seed),
-#         "Logistic Regression": LogisticRegression(max_iter=1000, random_state=seed),
-#         "Decision Tree": DecisionTreeClassifier(random_state=seed),
-#         "Random Forest": RandomForestClassifier(random_state=seed),
-#         "Gradient Boosting": GradientBoostingClassifier(random_state=seed),
-#         "Naive Bayes": GaussianNB(),
-#         "KNN": KNeighborsClassifier(),
-#         "Ridge Classifier": RidgeClassifier(),
-#         "DNN (MLP)": MLPClassifier(hidden_layer_sizes=(64, 32), max_iter=300, random_state=seed)
-#     }
-#     return models
+    scores = []
+    for model_name, mp in model_params.items():
+        clf = GridSearchCV(mp['model'], mp['params'], cv=5, return_train_score=False)
+        clf.fit(X_train, y_train)
+        scores.append({
+            'model': model_name,
+            'best_score': clf.best_score_,
+            'best_params': clf.best_params_
+        })
+    return pd.DataFrame(scores)
