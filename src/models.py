@@ -27,6 +27,7 @@ def evaluate_final_models(X_train, y_train):
         scores.append({
             'model': model_name,
             'best_score': clf.best_score_,
-            'best_params': clf.best_params_
+            'best_params': clf.best_params_,
+            'best_estimator': clf.best_estimator_
         })
     return pd.DataFrame(scores)

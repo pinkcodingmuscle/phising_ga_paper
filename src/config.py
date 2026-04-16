@@ -20,7 +20,7 @@ TOP_K_FEATURES = 50
 POP_SIZE = 50
 
 # Max generations the GA is allowed to run before stopping
-N_GENERATIONS = 1
+N_GENERATIONS = 100
 
 # set mutation rate to control how often random changes are introduced to offspring
 MUTATION_RATE = 0.01

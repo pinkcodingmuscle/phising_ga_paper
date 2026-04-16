@@ -1,6 +1,8 @@
 import numpy as np
 from sklearn.model_selection import cross_val_score
 from sklearn.svm import SVC
+from config import POP_SIZE, N_GENERATIONS, MUTATION_RATE, CROSSOVER_RATE, SEED, TOURNAMENT_SIZE, EARLY_STOP_PATIENCE, MIN_IMPROVEMENT
+
 
 # ================================================================
 # ga_feature_selection.py
@@ -131,14 +133,14 @@ def mutate(chromosome, mutation_rate=0.01):
 def run_ga(
     X,
     y,
-    pop_size=50,
-    n_generations=100,
-    mutation_rate=0.01,
-    crossover_rate=0.80,
-    tournament_size=3,
-    early_stop_patience=5,
-    min_improvement=0.001,
-    seed=42
+    pop_size=POP_SIZE,
+    n_generations=N_GENERATIONS,
+    mutation_rate=MUTATION_RATE,
+    crossover_rate=CROSSOVER_RATE,
+    tournament_size=TOURNAMENT_SIZE,
+    early_stop_patience=EARLY_STOP_PATIENCE,
+    min_improvement=MIN_IMPROVEMENT,
+    seed=SEED
 ):
     # random seed for reproducibility of the GA's stochastic 
     # processes (initial population, selection, crossover, mutation)
