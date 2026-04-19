@@ -31,11 +31,3 @@ def evaluate_final_models(X_train, y_train):
             'best_estimator': clf.best_estimator_
         })
     return pd.DataFrame(scores)
-
-# def get_models(seed = 42):
-#     models = {
-#         "SVM": SVC(kernel='rbf', random_state=seed),
-#         "Logistic Regression": LogisticRegression(max_iter=1000, random_state=seed), # multi_class removed to fix warning
-#         "Decision Tree": DecisionTreeClassifier(random_state=seed)  
-#     }
-#     return models
